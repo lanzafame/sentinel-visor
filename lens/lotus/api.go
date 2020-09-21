@@ -6,6 +6,7 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/lotus/api"
+	lotus_miner "github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/sentinel-visor/lens"
 	"github.com/filecoin-project/specs-actors/actors/util/adt"
@@ -109,7 +110,7 @@ func (aw *APIWrapper) StateMinerPower(ctx context.Context, addr address.Address,
 	return aw.FullNode.StateMinerPower(ctx, addr, tsk)
 }
 
-func (aw *APIWrapper) StateMinerSectors(ctx context.Context, addr address.Address, filter *bitfield.BitField, filterOut bool, tsk types.TipSetKey) ([]*api.ChainSectorInfo, error) {
+func (aw *APIWrapper) StateMinerSectors(ctx context.Context, addr address.Address, filter *bitfield.BitField, filterOut bool, tsk types.TipSetKey) ([]*lotus_miner.ChainSectorInfo, error) {
 	ctx, span := global.Tracer("").Start(ctx, "Lotus.StateMinerSectors")
 	defer span.End()
 	return aw.FullNode.StateMinerSectors(ctx, addr, filter, filterOut, tsk)

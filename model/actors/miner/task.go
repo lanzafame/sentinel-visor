@@ -6,7 +6,7 @@ import (
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
 	"github.com/filecoin-project/lotus/api"
-	"github.com/filecoin-project/lotus/chain/events/state"
+	lotus_miner "github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/specs-actors/actors/builtin/miner"
 	"github.com/go-pg/pg/v10"
@@ -33,8 +33,8 @@ type MinerTaskResult struct {
 	State            miner.State
 	Info             *miner.MinerInfo
 	Power            *api.MinerPower
-	PreCommitChanges *state.MinerPreCommitChanges
-	SectorChanges    *state.MinerSectorChanges
+	PreCommitChanges *lotus_miner.PreCommitChanges
+	SectorChanges    *lotus_miner.SectorChanges
 	PartitionDiff    map[uint64]*PartitionStatus
 }
 

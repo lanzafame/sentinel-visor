@@ -14,6 +14,7 @@ import (
 
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-bitfield"
+	lotus_miner "github.com/filecoin-project/lotus/chain/actors/builtin/miner"
 	"github.com/filecoin-project/lotus/chain/events/state"
 	"github.com/filecoin-project/lotus/chain/types"
 	"github.com/filecoin-project/specs-actors/actors/builtin/miner"
@@ -200,7 +201,7 @@ func (mac *ProcessMinerTask) Task(job *work.Job) error {
 	return nil
 }
 
-func minerPreCommitChanges(ctx context.Context, node lens.API, maddr address.Address, ts, pts types.TipSetKey) (*state.MinerPreCommitChanges, error) {
+func minerPreCommitChanges(ctx context.Context, node lens.API, maddr address.Address, ts, pts types.TipSetKey) (*lotus_miner.PreCommitChanges, error) {
 	pred := state.NewStatePredicates(node)
 	changed, val, err := pred.OnMinerActorChange(maddr, pred.OnMinerPreCommitChange())(ctx, pts, ts)
 	if err != nil {
@@ -209,11 +210,11 @@ func minerPreCommitChanges(ctx context.Context, node lens.API, maddr address.Add
 	if !changed {
 		return nil, nil
 	}
-	out := val.(*state.MinerPreCommitChanges)
+	out := val.(*lotus_miner.PreCommitChanges)
 	return out, nil
 }
 
-func minerSectorChanges(ctx context.Context, node lens.API, maddr address.Address, ts, pts types.TipSetKey) (*state.MinerSectorChanges, error) {
+func minerSectorChanges(ctx context.Context, node lens.API, maddr address.Address, ts, pts types.TipSetKey) (*lotus_miner.SectorChanges, error) {
 	pred := state.NewStatePredicates(node)
 	changed, val, err := pred.OnMinerActorChange(maddr, pred.OnMinerSectorChange())(ctx, pts, ts)
 	if err != nil {
@@ -222,7 +223,7 @@ func minerSectorChanges(ctx context.Context, node lens.API, maddr address.Addres
 	if !changed {
 		return nil, nil
 	}
-	out := val.(*state.MinerSectorChanges)
+	out := val.(*lotus_miner.SectorChanges)
 	return out, nil
 }
 
